@@ -26,7 +26,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Low 1',
                     'level' => 'low',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -34,7 +34,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Low 2',
                     'level' => 'low',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -42,7 +42,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Low 3',
                     'level' => 'low',
                     'weight' => '50.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -50,7 +50,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Med 1',
                     'level' => 'med',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -58,7 +58,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Med 2',
                     'level' => 'med',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -66,7 +66,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'Med 3',
                     'level' => 'med',
                     'weight' => '50.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -74,7 +74,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'High 1',
                     'level' => 'high',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -82,7 +82,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'High 2',
                     'level' => 'high',
                     'weight' => '25.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
                 [
@@ -90,7 +90,7 @@ class PrizeSeeder extends Seeder
                     'name' => 'High 3',
                     'level' => 'high',
                     'weight' => '50.00',
-                    'starts_at' => now()->startOfDay(),
+                    'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
                 ],
             ]);

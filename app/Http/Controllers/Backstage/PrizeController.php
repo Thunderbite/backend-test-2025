@@ -65,20 +65,6 @@ class PrizeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Prize $prize)
-    {
-        return view('backstage.prizes.show', [
-            'prize' => $prize,
-
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

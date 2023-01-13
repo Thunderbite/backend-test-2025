@@ -37,7 +37,7 @@ class UserTable extends TableComponent
             'columns' => $columns,
             'resource' => 'users',
             'rows' => User::search($this->search)
-                ->orderBy($this->sortField, $this->sortAsc ? 'DESC' : 'ASC')
+                ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);
     }

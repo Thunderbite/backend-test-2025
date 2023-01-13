@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Campaign;
 use App\Models\Prize;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,7 @@ class GameFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * @throws Exception
      */
     public function definition()
     {
@@ -24,7 +26,7 @@ class GameFactory extends Factory
             'campaign_id' => $campaign->id,
             'prize_id' => Prize::where('campaign_id', $campaign->id)->inRandomOrder()->first()->id,
             'account' => $this->faker->userName(),
-            'revealed_at' => now(),
+            'revealed_at' => now()->subDays(random_int(1, 10))
         ];
     }
 }
