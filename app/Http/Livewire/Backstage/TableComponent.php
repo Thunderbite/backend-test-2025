@@ -13,7 +13,7 @@ namespace App\Http\Livewire\Backstage;
 
         public $search = '';
 
-        public $sortAsc = true;
+        public $sortDesc = true;
 
         public $hasSearch = true;
 
@@ -22,9 +22,9 @@ namespace App\Http\Livewire\Backstage;
         public function sortBy($field)
         {
             if ($this->sortField === $field) {
-                $this->sortAsc = ! $this->sortAsc;
+                $this->sortDesc = ! $this->sortDesc;
             } else {
-                $this->sortAsc = true;
+                $this->sortDesc = true;
             }
 
             $this->sortField = $field;

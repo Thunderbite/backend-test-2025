@@ -3,10 +3,22 @@
 namespace App\Http\Livewire\Backstage;
 
 use App\Models\Game;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GameTable extends TableComponent
 {
     public $sortField = 'revealed_at';
+    public $extraFilters = 'games-filters';
+
+    public $prizeId = null;
+    public $account = null;
+    public $startDate = null;
+    public $endDate = null;
+
+    public function export()
+    {
+
+    }
 
     public function render()
     {
@@ -39,7 +51,9 @@ class GameTable extends TableComponent
             'columns' => $columns,
             'resource' => 'games',
             'rows' => Game::filter()
-                ->orderBy($this->sortField, $this->sortAsc ? 'DESC' : 'ASC')
+                ->join('prizes', 'prizes.id', '=', 'games.prize_id')
+                ->where('prizes.campaign_id', session('activeCampaign'))
+                ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);
     }

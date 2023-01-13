@@ -1,6 +1,6 @@
 # Thunderbite Backend Test
 
-This test is designed to test your laravel and algorithm knowledge and it is a good representation of your core skills that are required to become a Thunderbite team member.
+This test is designed to test your laravel and algorithm knowledge, and it is a good representation of your core skills that are required to become a Thunderbite team member.
 
 ## Installation
 
@@ -8,73 +8,110 @@ For these instructions we assume you make use of Laravel Valet.
 If you are not making use of Laravel Valet the below could differ a bit.
 
 1. Clone this repository
-1. Run composer install
-1. Create and fill the .env file (example included /.env-example)
-1. Run `php artisan migrate` to create database tables
-1. Seed the database by running `php artisan db:seed`
-1. Run `npm install`
-1. Run `npm run dev`
-1. Visit http://thunderbite-backend-test.test/backstage and happy coding
+2. Run composer install
+3. Create and fill the .env file (example included /.env-example)
+4. Run `php artisan migrate` to create database tables
+5. Seed the database by running `php artisan db:seed`
+6. Run `npm install`
+7. Run `npm run dev`
+8. Visit http://thunderbite-backend-test.test/backstage and happy coding
 
 Login details: test@thunderbite.com / test123
 
+
 ## Test tasks
 
-##### Task 1
-The task is to create a slot machine game with 5x3 reels. (eg https://slotcatalog.com/userfiles/image/games/Microgaming/162/Fruit-Fiesta-2_s.jpg)
+Database seed will create two test campaigns, 10k game records and 18 prize records.
+You can enter first test campaign here:
 
-Create an algorithm that generates a 5 x 3 array that simulates a 5 reel slot e.g
-```
+http://thunderbite-backend-test.test/test-campaign-1?a=account&segment=low
+
+Here you will find a board of 25 squares 5x5.
+
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+|  |  |  |  |  |
+|  |  |  |  |  |   
+|  |  |  |  |  |
+|  |  |  |  |  |
+
+##### Task 1
+
+###### Create a game.
+When account enters the campaign link, a game record should be created or retrieved unfinished one for that account. Account should be passed as a query parameter.
+Game objective, is to click on the board, each click will open random tile (prizes section in back office), when you collect 3 same tiles (prizes) on the board game is complete, and you win that prize.
+
+Please also take in consideration campaign start and end dates, show campaign ended popup if it has ended (game can't be played anymore).
+
+We have already created frontend controller and route for this task, you can find it here:
+`FrontendController@loadCampaign`
+
+There is simple frontend provided for this game, you will have to pass `$config` variable to the frontend, that has to be `json` string containing these parameters:
+
+
+```php
 [
-    [4, 3, 1, 4, 6]
-    [2, 5, 3, 2, 1]
-    [5, 2, 3, 6, 1]
-]  
-```
-A winning line is created when an array has 3 to 5 of the same symbol IDs <u>in succession</u> in the predefined payline.
- ```
- [
-    [1,  2,  3,  4,  5 ]
-    [6,  7,  8,  9,  10]
-    [11, 12, 13, 14, 15]
+     'apiPath' => '/api/openTile', // FE will make request to this endpoint when account clicks on the board square
+     'gameId' => 'gameID' // this will be passed to `apiPath` endpoint as POST parameter
+     'reveledTiles' => [[
+        'index' => 0
+        'image' => '/assets/tile.jpg'
+    ]], // this will have to be used to restore what account has opened, if he/she refreshes the page
+    'message' => 'Campaign has ended' // message popup layout on load, game can't be played with it 
 ]
 ```
 
-All the possible paylines for the given example are: 1-2-3-4-5, 6-7-8-9-10,
-11-12-13-14-15, 1-7-13-9-5, 11-7-3-9-15, 6-2-3-4-10, 6-12-13-14-10, 1-2-8-14-15,
-11-12-8-4-5.
+FE will make this request with example body`POST apiPath`
+```json
+{
+    "gameId": 0,
+    "tileIndex": 0
+}
+```
 
-User should be allowed to create a new symbol and upload 1 image which represents it.
-Different symbols should have different points for 3, 4 and 5 matches. Make it configurable.
+FE will be expecting this response from the endpoint and will display image provided on clicked square:
+```json
+{
+    "tileImage": "/assets/tile.jpg"
+}
+```
 
-As a part of the game launch validation, a minimum of 6 and a maximum of 10 symbols should be present/active in the
-backoffice. <u>Please provide a database seeder for a default configuration.</u>
+When last tile is being opened (3rd match) please include prize description in response, that will be shown in popup of the game:
+```json
+{
+    "tileImage": "/assets/tile.jpg",
+    "message": "You won a prize!"
+}
+```
 
-At the end of the game the total sum of points should be displayed.
 
-When a user opens the campaign url, game should be created taking into account
- all necessary checks (start, end dates and required params e.g 'a=acc1&spins=4').
-User will have a certain amount of spins per day. For simplicity make this 
-configurable as an url parameter (eg 'a=acc1&spins=4' - **'spins' in
-this case defines maximum number of spins that user with account 'acc1' gets that day**).
+* Please allow to upload prize tile image in back office, and use that image in the game. Each prize should have tile uploaded for it to work.
+    * you can find example tile assets in `/resources/assets/`
+* When drawing a tile please take in consideration prize `weighting` which is configurable in back office
+    * You should use this to apply the weights:
+  ```php
+   ->orderByRaw('-LOG(1.0 - RAND()) / weight')
+  ```
+    * Bonus points if you could create an illusion that each prize has equal chance of being drawn until very end
+    * Please note that prizes are segmented, default account segment should be `low`, account's segment should be passed loading campaign through GET parameter `segment`. Segments work like this, if account A comes with segment set low, only prizes assigned segment low could be drawn for this account.
+    * Add extra input in backoffice `prizes` section crud, call it `daily volume`. Make sure this works in game logic, it shouldn't allow to draw more than `daily volume` of the same prize in one day.
+    * Make sure that board can be resumed, if same account refreshes the page, or comes back to the game later.
+    * `users` table is for back office access only, we don't need to create accounts in it, games table `account` field is enough.
 
-Frontend should contain 1 button ('Spin') which will
- simulate clicking the spin button on the slot machine and will trigger ajax call that returns 
- the 5x3 array. **Awarded points and symbols should be saved in games table and displayed in 
- Games section in the backoffice**. Don't create more than 1 game per day per user, but make
-sure that all spins are logged.
-
+##### Task 2
 Add Export button to Games section, which will generate a CSV of all <u>filtered</u> games.
 
-##### Part 2
-All user games can be accessed from backstage/games section.
+All accounts games can be accessed from backstage/games section.
 This page should contain table filters, for easy data querying.
 Filters that should be added can be seen in Games::filter() method (this particular query can be improved).
-Backstage already contains all the elements you need for the html.
- 
-Database might have mistakes or bad practices, and needs optimization and/or extra fields in certain tables.
+
+Database might have mistakes or bad practices, and needs optimization and/or extra fields in certain tables. Feel free to change anything you like.
 
 Loading of the games section can be greatly improved with appropriate optimizations.
+
+##### Bonus Task
+
+Cover game logic with some tests. We prefer `pest` framework, but you can use standard `phpunit` if you prefer.
 
 **All changes to the database should be done with new migrations.**
 

@@ -39,7 +39,7 @@ class CampaignTable extends TableComponent
             'columns' => $columns,
             'resource' => 'campaigns',
             'rows' => Campaign::search($this->search)
-                ->orderBy($this->sortField, $this->sortAsc ? 'DESC' : 'ASC')
+                ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);
     }

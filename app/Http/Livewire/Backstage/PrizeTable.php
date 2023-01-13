@@ -41,7 +41,7 @@ class PrizeTable extends TableComponent
             $columns[] = [
                 'title' => 'tools',
                 'sort' => false,
-                'tools' => ['show', 'edit', 'delete'],
+                'tools' => ['edit', 'delete'],
             ];
         }
 
@@ -50,7 +50,7 @@ class PrizeTable extends TableComponent
             'resource' => 'prizes',
             'rows' => Prize::search($this->search)
                 ->where('campaign_id', session('activeCampaign'))
-                ->orderBy($this->sortField, $this->sortAsc ? 'DESC' : 'ASC')
+                ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);
     }

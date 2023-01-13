@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const tailwindcss = require('tailwindcss');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,12 +12,19 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+    .sass('resources/sass/app.scss', 'public/css')
+    .options({
+        processCssUrls: false,
+        postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
 
 
 mix.js("resources/js/backstage.js", "public/js")
-    .postCss("resources/css/backstage.css", "public/css", [
-        require("tailwindcss"),
-    ]);
+    .sass('resources/sass/backstage.scss', 'public/css')
+    .options({
+        processCssUrls: false,
+        postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
+    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
+
+mix.copy("resources/js/game.js", "public/js");
