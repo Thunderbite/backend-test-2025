@@ -9,7 +9,6 @@ use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('backstage')->name('backstage.')->middleware(['auth', 'setActiveCampaign'])->group(function () {
-
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -17,7 +16,7 @@ Route::prefix('backstage')->name('backstage.')->middleware(['auth', 'setActiveCa
     Route::get('campaigns/{campaign}/use', [CampaignsController::class, 'use'])->name('campaigns.use');
     Route::resource('campaigns', CampaignsController::class);
 
-    Route::group(['middleware' => ['redirectIfNoActiveCampaign']], function () {
+    Route::middleware('redirectIfNoActiveCampaign')->group(function () {
         Route::resource('games', GameController::class);
         Route::resource('prizes', PrizeController::class);
     });

@@ -20,7 +20,10 @@ class Campaign extends Model
         'timezone', 'name', 'slug', 'starts_at', 'ends_at',
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'starts_at', 'ends_at'];
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+    ];
 
     /**
      * Get the options for generating the slug.

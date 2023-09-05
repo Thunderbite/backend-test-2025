@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
 use App\Models\Campaign;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CampaignsController extends Controller
 {
@@ -14,7 +16,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('backstage.campaigns.index');
     }
@@ -24,7 +26,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('backstage.campaigns.create', [
             'campaign' => new Campaign(),
@@ -35,10 +37,8 @@ class CampaignsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -70,11 +70,10 @@ class CampaignsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         //
     }
@@ -82,10 +81,9 @@ class CampaignsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Campaign $campaign)
+    public function edit(Campaign $campaign): View
     {
         return view('backstage.campaigns.edit', compact('campaign'));
     }
@@ -94,10 +92,8 @@ class CampaignsController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRequest $request
-     * @param Campaign $campaign
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Campaign $campaign)
+    public function update(Campaign $campaign): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -126,7 +122,6 @@ class CampaignsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Campaign $campaign)
@@ -142,7 +137,7 @@ class CampaignsController extends Controller
         return redirect(route('backstage.campaigns.index'));
     }
 
-    public function use(Campaign $campaign)
+    public function use(Campaign $campaign): RedirectResponse
     {
         session()->put('activeCampaign', $campaign->id);
 

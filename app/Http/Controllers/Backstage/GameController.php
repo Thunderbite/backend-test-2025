@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backstage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
 use App\Models\Campaign;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class GameController extends Controller
 {
@@ -18,7 +20,7 @@ class GameController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('backstage.games.index');
     }
@@ -48,11 +50,10 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         //
     }
@@ -73,9 +74,8 @@ class GameController extends Controller
      *
      * @param UpdateRequest $request
      * @param Campaign $campaign
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update()
+    public function update(): RedirectResponse
     {
         //
     }
@@ -83,7 +83,6 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Campaign $campaign)

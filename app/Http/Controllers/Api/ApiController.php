@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ApiController extends Controller
@@ -14,7 +13,7 @@ class ApiController extends Controller
         Cache::put(request('gameId'), $currentMove);
 
         return [
-            'tileImage' => asset('assets/'.mt_rand(1, 7).'.png')
+            'tileImage' => asset('assets/'.mt_rand(1, 7).'.png'),
         ] + ($currentMove >= 10 ? ['message' => 'you lost'] : []);
     }
 }

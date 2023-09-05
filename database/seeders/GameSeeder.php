@@ -9,10 +9,8 @@ class GameSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         Game::truncate();
         Game::factory()->count(10000)->create();
