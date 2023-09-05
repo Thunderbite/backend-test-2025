@@ -17,8 +17,6 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -38,8 +36,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request): RedirectResponse
     {
@@ -69,7 +65,6 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(int $id)
@@ -91,9 +86,7 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, User $user): RedirectResponse
     {
@@ -120,7 +113,6 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user): JsonResponse
     {

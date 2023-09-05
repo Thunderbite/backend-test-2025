@@ -37,8 +37,6 @@ class CampaignsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(): RedirectResponse
     {
@@ -72,7 +70,6 @@ class CampaignsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -84,7 +81,6 @@ class CampaignsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Campaign $campaign): View
@@ -96,8 +92,6 @@ class CampaignsController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRequest $request
-     * @param Campaign $campaign
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Campaign $campaign): RedirectResponse
     {
@@ -128,7 +122,6 @@ class CampaignsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Campaign $campaign)

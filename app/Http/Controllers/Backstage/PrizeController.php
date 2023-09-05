@@ -18,8 +18,6 @@ class PrizeController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): \Illuminate\View\View
     {
@@ -40,7 +38,6 @@ class PrizeController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(): RedirectResponse
     {
@@ -79,9 +76,6 @@ class PrizeController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param UpdateRequest $request
-     * @param Prize $prize
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, Prize $prize): RedirectResponse
     {
@@ -110,7 +104,6 @@ class PrizeController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Prize $prize): JsonResponse
     {

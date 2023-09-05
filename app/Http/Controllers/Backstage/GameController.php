@@ -50,7 +50,6 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -75,7 +74,6 @@ class GameController extends Controller
      *
      * @param UpdateRequest $request
      * @param Campaign $campaign
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(): RedirectResponse
     {
@@ -85,7 +83,6 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Campaign $campaign)
