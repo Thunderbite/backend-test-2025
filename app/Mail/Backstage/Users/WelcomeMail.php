@@ -31,7 +31,7 @@ class WelcomeMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->subject('Welcome to: '.config('app.name'))
             ->markdown('backstage.emails.users.welcome');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Prizes\UpdateRequest;
 use App\Models\Prize;
@@ -19,7 +21,7 @@ class PrizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         return view('backstage.prizes.index');
     }
@@ -28,7 +30,7 @@ class PrizeController extends Controller
      * Show the form for creating a new resource.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         $prize = new Prize();
         // Return the view
@@ -40,7 +42,7 @@ class PrizeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -69,7 +71,7 @@ class PrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Prize $prize)
+    public function edit(Prize $prize): \Illuminate\View\View
     {
         // Return the view
         return view('backstage.prizes.edit', compact('prize'));
@@ -81,7 +83,7 @@ class PrizeController extends Controller
      * @param Prize $prize
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, Prize $prize)
+    public function update(UpdateRequest $request, Prize $prize): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -110,7 +112,7 @@ class PrizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Prize $prize)
+    public function destroy(Prize $prize): JsonResponse
     {
         $prize->forceDelete();
 

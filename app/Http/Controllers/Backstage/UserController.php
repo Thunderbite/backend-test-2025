@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Users\StoreRequest;
 use App\Http\Requests\Backstage\Users\UpdateRequest;
@@ -17,7 +20,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         return view('backstage.users.index');
     }
@@ -26,7 +29,7 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('backstage.users.create', [
             'user' => new User(),
@@ -38,7 +41,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         // Setup the data
         $data = $request->validated();
@@ -69,7 +72,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
             //
     }
@@ -79,7 +82,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         return view('backstage.users.edit', [
             'user' => $user,
@@ -92,7 +95,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, User $user)
+    public function update(UpdateRequest $request, User $user): RedirectResponse
     {
         // Set base data
         $data = $request->validated();
@@ -119,7 +122,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->forceDelete();
 

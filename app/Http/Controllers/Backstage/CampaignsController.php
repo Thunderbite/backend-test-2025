@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
 use App\Models\Campaign;
@@ -14,7 +16,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('backstage.campaigns.index');
     }
@@ -24,7 +26,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('backstage.campaigns.create', [
             'campaign' => new Campaign(),
@@ -38,7 +40,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -74,7 +76,7 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         //
     }
@@ -85,7 +87,7 @@ class CampaignsController extends Controller
      * @param Campaign $campaign
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Campaign $campaign)
+    public function edit(Campaign $campaign): View
     {
         return view('backstage.campaigns.edit', compact('campaign'));
     }
@@ -97,7 +99,7 @@ class CampaignsController extends Controller
      * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Campaign $campaign)
+    public function update(Campaign $campaign): RedirectResponse
     {
         // Validation
         $data = $this->validate(request(), [
@@ -142,7 +144,7 @@ class CampaignsController extends Controller
         return redirect(route('backstage.campaigns.index'));
     }
 
-    public function use(Campaign $campaign)
+    public function use(Campaign $campaign): RedirectResponse
     {
         session()->put('activeCampaign', $campaign->id);
 

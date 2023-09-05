@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
 use App\Models\Campaign;
@@ -18,7 +20,7 @@ class GameController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('backstage.games.index');
     }
@@ -52,7 +54,7 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         //
     }
@@ -75,7 +77,7 @@ class GameController extends Controller
      * @param Campaign $campaign
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update()
+    public function update(): RedirectResponse
     {
         //
     }
