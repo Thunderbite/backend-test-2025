@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Backstage;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Prizes\UpdateRequest;
 use App\Models\Prize;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 

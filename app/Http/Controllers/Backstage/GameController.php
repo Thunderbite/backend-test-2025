@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backstage;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
 use App\Models\Campaign;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class GameController extends Controller
 {

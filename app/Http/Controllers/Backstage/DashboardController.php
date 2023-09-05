@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backstage;
 
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
