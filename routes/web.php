@@ -9,7 +9,6 @@ use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('backstage')->name('backstage.')->middleware(['auth', 'setActiveCampaign'])->group(function () {
-
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

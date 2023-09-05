@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\View;
 
-class redirectIfNoActiveCampaign
+class RedirectIfNoActiveCampaign
 {
     /**
      * Handle an incoming request.

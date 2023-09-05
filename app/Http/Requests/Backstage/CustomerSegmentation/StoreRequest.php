@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Backstage\CustomerSegmentation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {

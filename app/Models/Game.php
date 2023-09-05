@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,8 +20,7 @@ class Game extends Model
         $query = self::query();
         $campaign = Campaign::find(session('activeCampaign'));
 
-
-       // When filtering by dates, keep in mind `revealed_at` should be stored in Campaign timezone
+        // When filtering by dates, keep in mind `revealed_at` should be stored in Campaign timezone
 
         return $query;
     }

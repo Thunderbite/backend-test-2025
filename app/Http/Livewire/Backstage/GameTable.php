@@ -3,21 +3,23 @@
 namespace App\Http\Livewire\Backstage;
 
 use App\Models\Game;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GameTable extends TableComponent
 {
     public $sortField = 'revealed_at';
+
     public $extraFilters = 'games-filters';
 
     public $prizeId = null;
+
     public $account = null;
+
     public $startDate = null;
+
     public $endDate = null;
 
     public function export()
     {
-
     }
 
     public function render()

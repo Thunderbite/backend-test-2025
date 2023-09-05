@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Requests\Backstage\CustomerLevels;
 
 use Illuminate\Foundation\Http\FormRequest;
