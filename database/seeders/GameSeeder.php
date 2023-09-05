@@ -12,7 +12,7 @@ class GameSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Game::truncate();
         Game::factory()->count(10000)->create();

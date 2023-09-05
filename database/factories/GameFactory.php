@@ -18,7 +18,7 @@ class GameFactory extends Factory
      * @return array<string, mixed>
      * @throws Exception
      */
-    public function definition()
+    public function definition(): array
     {
         $campaign = Campaign::inRandomOrder()->first();
 

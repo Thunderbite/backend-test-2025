@@ -11,7 +11,7 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return  [
             'customerlevel_id'              => 'required|gt:0',
@@ -41,7 +41,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array Custom Validation Messages
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'points_band.*.required'    => 'Please select the points band',

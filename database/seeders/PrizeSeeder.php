@@ -13,7 +13,7 @@ class PrizeSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Prize::truncate();
 
