@@ -16,7 +16,10 @@ class Prize extends Model
         'ends_at',
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'starts_at', 'ends_at'];
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+    ];
 
     public static function search($query)
     {
