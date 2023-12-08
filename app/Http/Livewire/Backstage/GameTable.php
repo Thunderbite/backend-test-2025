@@ -31,14 +31,8 @@ class GameTable extends TableComponent
             ],
 
             [
-                'title' => 'prize_id',
+                'title' => 'prize_id', // please update this, that it would show prize name instead
                 'attribute' => 'prize_id',
-                'sort' => true,
-            ],
-
-            [
-                'title' => 'title',
-                'attribute' => 'title',
                 'sort' => true,
             ],
 

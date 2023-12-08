@@ -9,6 +9,11 @@ class ApiController extends Controller
 {
     public function flip()
     {
+        // this is dummy example, how to interact with provided FE
+        // game objective is to collect 3 same tiles, only then prize is given away
+        // only then prize volume has to be counted
+        // please use DATABASE layer to store and retrieve data, CACHE is just for dummy example
+
         $currentMove = (Cache::get(request('gameId')) ?? 0) + 1;
         Cache::put(request('gameId'), $currentMove);
 
