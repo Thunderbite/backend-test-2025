@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Backstage;
+namespace App\Livewire\Backstage;
 
 use App\Models\Prize;
 
