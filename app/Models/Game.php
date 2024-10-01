@@ -11,9 +11,12 @@ class Game extends Model
 
     protected $fillable = ['campaign_id', 'prize_id', 'account', 'revealed_at'];
 
-    protected $casts = [
-        'revealed_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'revealed_at' => 'datetime',
+        ];
+    }
 
     public static function filter(?string $account = null, ?int $prizeId = null, ?string $fromDate = null, ?string $tillDate = null)
     {
