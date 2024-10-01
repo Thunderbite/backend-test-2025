@@ -31,6 +31,7 @@ class PrizeController extends Controller
     public function create(): \Illuminate\View\View
     {
         $prize = new Prize();
+
         // Return the view
         return view('backstage.prizes.create', compact('prize'));
     }
