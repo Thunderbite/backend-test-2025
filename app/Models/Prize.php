@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Prize extends Model
@@ -30,12 +32,12 @@ class Prize extends Model
             : static::where('name', 'like', '%'.$query.'%');
     }
 
-    public function campaign()
+    public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
     }
 
-    public function prizes()
+    public function prizes(): HasMany
     {
         return $this->hasMany(PrizeTable::class, 'prize_id');
     }
