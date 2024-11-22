@@ -22,14 +22,8 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required',
             'timezone' => 'required',
-            'starts_at' => 'required|date_format:d-m-Y H:i:s',
-            'totalspins' => 'required',
-            'spin_schedule' => 'required',
-            'ends_at' => 'required|date_format:d-m-Y H:i:s|after:starts_at',
-            'targeting' => 'required',
-            'segmentation' => 'required',
-            'games_allowed' => 'required|numeric',
-            'games_frequency' => 'required',
+            'starts_at' => 'required',
+            'ends_at' => 'required',
         ];
     }
 }

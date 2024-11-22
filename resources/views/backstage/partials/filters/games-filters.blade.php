@@ -1,14 +1,14 @@
 <div class="grid grid-cols-5 gap-1">
-    <input wire:loading.attr="disabled" type="text" id="wire-account" wire:model="account" placeholder=" Account"
+    <input wire:loading.attr="disabled" type="text" id="wire-account" wire:model.live="account" placeholder=" Account"
            class="h-10 border border-gray-300 rounded-lg mr-4">
-    <input wire:loading.attr="disabled" type="number" id="wire-account" wire:model="prizeId" placeholder=" Prize ID"
+    <input wire:loading.attr="disabled" type="number" id="wire-account" wire:model.live="prizeId" placeholder=" Prize ID"
            class="h-10 border border-gray-300 rounded-lg mr-4">
-    <input wire:loading.attr="disabled" type="text" wire:model="startDate" id="wire-starts" placeholder=" Start Date"
+    <input wire:loading.attr="disabled" type="text" wire:model.live="startDate" id="wire-starts" placeholder=" Start Date"
            class="h-10 border border-gray-300 rounded-lg mr-4">
-    <input type="text" wire:model="endDate" id="wire-ends" placeholder=" End Date"
+    <input type="text" wire:model.live="endDate" id="wire-ends" placeholder=" End Date"
            class="h-10 border border-gray-300 rounded-lg mr-4">
 
-    <button wire:click="$emit('cleanAll')" class="h-10 bg-white hover:bg-gray-100 text-gray-800
+    <button wire:click="$dispatch('cleanAll')" class="h-10 bg-white hover:bg-gray-100 text-gray-800
     font-semibold py-2 px-4 border-2 border-gray-400 rounded shadow">
         Clean All
     </button>
@@ -16,7 +16,7 @@
 
 @push('js')
     <script>
-        window.livewire.on('cleanAll', function () {
+        Livewire.on('cleanAll', function () {
         @this.set('account', '');
         @this.set('prizeId', '');
         @this.set('startDate', '');

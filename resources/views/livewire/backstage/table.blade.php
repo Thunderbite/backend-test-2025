@@ -36,7 +36,7 @@
 
 @push('js')
     <script>
-        window.livewire.on('deleteResource', function(url, resource){
+        Livewire.on('deleteResource', function(url, resource){
             swal({
                 title: "Are you sure you want to delete this "+resource+"?",
                 text: "The data will be permanently removed from our servers forever. This action cannot be undone!",
@@ -67,7 +67,7 @@
                                 buttons: false,
                                 timer: 1000,
                             });
-                            window.livewire.emit('resourceDeleted');
+                            Livewire.emit('resourceDeleted');
                         });
                 }
             });

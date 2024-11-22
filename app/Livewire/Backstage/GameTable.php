@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Backstage;
+namespace App\Livewire\Backstage;
 
 use App\Models\Game;
 
@@ -18,9 +18,7 @@ class GameTable extends TableComponent
 
     public $endDate = null;
 
-    public function export()
-    {
-    }
+    public function export() {}
 
     public function render()
     {

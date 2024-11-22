@@ -25,12 +25,13 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(): View
     {
         return view('backstage.users.create', [
-            'user' => new User(),
+            'user' => new User,
         ]);
     }
 
@@ -63,19 +64,8 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(int $id)
-    {
-            //
-    }
-
-    /**
      * Show the form for editing the specified resource.
-     * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      */
     public function edit(User $user): View
     {
@@ -86,7 +76,7 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  int  $id
+     *
      */
     public function update(UpdateRequest $request, User $user): RedirectResponse
     {
@@ -112,18 +102,15 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param  int  $id
+     *
      */
-    public function destroy(User $user): JsonResponse
+    public function destroy(User $user): RedirectResponse
     {
         $user->forceDelete();
 
-        if (request()->ajax()) {
-            return response()->json(['status' => 'success']);
-        }
-
         session()->flash('success', 'The user has been removed!');
 
-        return redirect(route('backstage.users.index'));
+        return redirect()->route('backstage.users.index');
+
     }
 }

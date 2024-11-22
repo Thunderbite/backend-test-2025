@@ -19,30 +19,13 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'customerlevel_id'              => 'required',
-            'points_band.*'                 => 'required',
-            'message.*'                     => 'required',
-            'redirect_desktop'              => 'required',
-            'redirect_mobile'               => 'required',
-            'win_popup_image'               => 'required',
-            'nowin_popup_image'             => 'required',
-            'customer_segmentation_id.*'    => 'sometimes|required|customer_segmentation_id|gt:0',
-        ];
-
-        return $rules;
-    }
-
-    /**
-     * Get Custom Validation Messages
-     *
-     * @return array Custom Validation Messages
-     */
-    public function messages(): array
-    {
         return [
-            'points_band.*.required'    => 'Please select the points band',
-            'message.*.required'        => 'Please fill in a message',
+            'name' => 'required|max:255',
+            'description' => 'sometimes',
+            'weight' => 'required|numeric|between:0.01,99.99',
+            'starts_at' => 'required|date_format:d-m-Y H:i:s',
+            'ends_at' => 'required|date_format:d-m-Y H:i:s',
+            'segment' => 'required|in:low,med,high',
         ];
     }
 }

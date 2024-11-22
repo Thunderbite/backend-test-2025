@@ -20,9 +20,9 @@
 ])
 
 @include('backstage.partials.forms.select', [
-    'field' => 'level',
-    'label' => 'Level',
-    'value' => old('level') ?? $prize->level,
+    'field' => 'segment',
+    'label' => 'Segment',
+    'value' => old('segment') ?? $prize->segment,
     'options' => ['low' => 'Low', 'med' => 'Medium', 'high' => 'High'],
 ])
 
@@ -35,3 +35,4 @@
 
 
 @includeWhen(empty($disabled), 'backstage.partials.forms.submit')
+

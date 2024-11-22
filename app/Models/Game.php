@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Game extends Model
 {
@@ -11,9 +12,12 @@ class Game extends Model
 
     protected $fillable = ['campaign_id', 'prize_id', 'account', 'revealed_at'];
 
-    protected $casts = [
-        'revealed_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'revealed_at' => 'datetime',
+        ];
+    }
 
     public static function filter(?string $account = null, ?int $prizeId = null, ?string $fromDate = null, ?string $tillDate = null)
     {
@@ -25,12 +29,12 @@ class Game extends Model
         return $query;
     }
 
-    public function campaign()
+    public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
     }
 
-    public function prize()
+    public function prize(): BelongsTo
     {
         return $this->belongsTo(Prize::class);
     }

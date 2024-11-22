@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Prize extends Model
@@ -10,16 +12,19 @@ class Prize extends Model
         'campaign_id',
         'name',
         'description',
-        'level',
+        'segment',
         'weight',
         'starts_at',
         'ends_at',
     ];
 
-    protected $casts = [
-        'starts_at' => 'datetime',
-        'ends_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'starts_at' => 'datetime',
+            'ends_at' => 'datetime',
+        ];
+    }
 
     public static function search($query)
     {
@@ -27,13 +32,8 @@ class Prize extends Model
             : static::where('name', 'like', '%'.$query.'%');
     }
 
-    public function campaign()
+    public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
-    }
-
-    public function prizes()
-    {
-        return $this->hasMany(PrizeTable::class, 'prize_id');
     }
 }

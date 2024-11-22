@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Backstage;
+namespace App\Livewire\Backstage;
 
-use App\Models\User;
+use App\Models\Prize;
 
-class UserTable extends TableComponent
+class PrizeTable extends TableComponent
 {
     public $sortField = 'name';
 
@@ -15,12 +15,24 @@ class UserTable extends TableComponent
                 'title' => 'name',
                 'sort' => true,
             ],
+
             [
-                'title' => 'email',
+                'title' => 'segment',
                 'sort' => true,
             ],
+
             [
-                'title' => 'level',
+                'title' => 'weight',
+                'sort' => true,
+            ],
+
+            [
+                'title' => 'starts_at',
+                'sort' => true,
+            ],
+
+            [
+                'title' => 'ends_at',
                 'sort' => true,
             ],
         ];
@@ -35,8 +47,9 @@ class UserTable extends TableComponent
 
         return view('livewire.backstage.table', [
             'columns' => $columns,
-            'resource' => 'users',
-            'rows' => User::search($this->search)
+            'resource' => 'prizes',
+            'rows' => Prize::search($this->search)
+                ->where('campaign_id', session('activeCampaign'))
                 ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);

@@ -12,7 +12,7 @@ class FrontendController extends Controller
      */
     public function loadCampaign(Campaign $campaign): View
     {
-        $jsonConfig = '{}';
+        $jsonConfig = '{"apiPath" : "/api/flip", "gameId" : 1}';
 
         return view('frontend.index', ['config' => $jsonConfig]);
     }
