@@ -3,7 +3,7 @@
         @foreach($rows as $key => $row)
             <tr class="@if( ($key+1) % 2 === 0 ) alternate @endif">
                 @foreach($columns as $column)
-               
+
                     @if( $column['title'] !== 'tools' )
                         <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                             @if( isset($column['attribute']) )
@@ -11,13 +11,13 @@
                             @elseif( isset($column['relationship']))
                                 {{ $row->{$column['relationship']}($row) }}
                             @elseif( isset($column['array']))
-                                {!! collect($row->{$column['array']}) !!}    
-                            @elseif( isset($column['model']) )                             
-                                    @php($modelname = $column['model'])                                
+                                {!! collect($row->{$column['array']}) !!}
+                            @elseif( isset($column['model']) )
+                                    @php($modelname = $column['model'])
                                     @php($param = $column['param'])
-                                    @modelname($row, $modelname, $param)                                                                                                     
+                                    @modelname($row, $modelname, $param)
                             @else
-                                {{ $row->{$column['title']} ?? '' }}          
+                                {{ $row->{$column['title']} ?? '' }}
                             @endif
                         </td>
                     @else
@@ -41,7 +41,7 @@
                             @endif
 
                             @if( in_array('delete', $column['tools'], true) && auth()->user()->isAdmin() )
-                                <button wire:click="$emit('deleteResource', '{{ route('backstage.'.$resource.'.destroy', $row->id) }}', '{{ Str::singular($resource) }}')" class="table-tool">
+                                <button wire:click="$dispatch('deleteResource', '{{ route('backstage.'.$resource.'.destroy', $row->id) }}', '{{ Str::singular($resource) }}')" class="table-tool">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             @endif

@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class GameController extends Controller
 {
-    public function __construct() {}
 
     /**
      * Display a listing of the resource.
