@@ -18,9 +18,7 @@ class GameTable extends TableComponent
 
     public $endDate = null;
 
-    public function export()
-    {
-    }
+    public function export() {}
 
     public function render()
     {

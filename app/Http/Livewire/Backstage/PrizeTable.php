@@ -17,7 +17,7 @@ class PrizeTable extends TableComponent
             ],
 
             [
-                'title' => 'level',
+                'title' => 'segment',
                 'sort' => true,
             ],
 
@@ -27,12 +27,12 @@ class PrizeTable extends TableComponent
             ],
 
             [
-                'title' => 'startDate',
+                'title' => 'starts_at',
                 'sort' => true,
             ],
 
             [
-                'title' => 'endDate',
+                'title' => 'ends_at',
                 'sort' => true,
             ],
         ];

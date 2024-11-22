@@ -10,7 +10,7 @@ class Prize extends Model
         'campaign_id',
         'name',
         'description',
-        'level',
+        'segment',
         'weight',
         'starts_at',
         'ends_at',
@@ -30,10 +30,5 @@ class Prize extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class);
-    }
-
-    public function prizes()
-    {
-        return $this->hasMany(PrizeTable::class, 'prize_id');
     }
 }

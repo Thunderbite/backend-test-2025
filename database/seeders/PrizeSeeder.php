@@ -22,7 +22,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Low 1',
-                    'level' => 'low',
+                    'segment' => 'low',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -30,7 +30,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Low 2',
-                    'level' => 'low',
+                    'segment' => 'low',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -38,7 +38,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Low 3',
-                    'level' => 'low',
+                    'segment' => 'low',
                     'weight' => '50.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -46,7 +46,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Med 1',
-                    'level' => 'med',
+                    'segment' => 'med',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -54,7 +54,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Med 2',
-                    'level' => 'med',
+                    'segment' => 'med',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -62,7 +62,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'Med 3',
-                    'level' => 'med',
+                    'segment' => 'med',
                     'weight' => '50.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -70,7 +70,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'High 1',
-                    'level' => 'high',
+                    'segment' => 'high',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -78,7 +78,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'High 2',
-                    'level' => 'high',
+                    'segment' => 'high',
                     'weight' => '25.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),
@@ -86,7 +86,7 @@ class PrizeSeeder extends Seeder
                 [
                     'campaign_id' => $campaign->id,
                     'name' => 'High 3',
-                    'level' => 'high',
+                    'segment' => 'high',
                     'weight' => '50.00',
                     'starts_at' => now()->subDays(10)->startOfDay(),
                     'ends_at' => now()->addDays(7)->endOfDay(),

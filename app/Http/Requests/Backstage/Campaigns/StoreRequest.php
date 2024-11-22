@@ -23,14 +23,7 @@ class StoreRequest extends FormRequest
             'name' => 'required',
             'timezone' => 'required',
             'starts_at' => 'required',
-
-            'totalspins' => 'required',
-            'spin_schedule' => 'required',
-            'ends_at' => 'required|date|after:starts_at',
-            'targeting' => 'required',
-            'segmentation' => 'required',
-            'games_allowed' => 'required|numeric',
-            'games_frequency' => 'required',
+            'ends_at' => 'required',
         ];
     }
 }
