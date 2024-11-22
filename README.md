@@ -14,7 +14,7 @@ The following instructions assume you are using Laravel Valet. If not, some step
 6. Seed the database by running `php artisan db:seed`.
 7. Run `npm install`.
 8. Run `npm run dev`.
-9. Visit `http://thunderbite-backend-test.test/backstage` and start coding!
+9. Visit `https://thunderbite-backend-test.test/backstage` and start coding!
 
 Login credentials for the back office:
 - Email: `test@thunderbite.com`
@@ -31,7 +31,7 @@ The database seeder creates:
 
 Access the first test campaign here:
 
-`http://thunderbite-backend-test.test/test-campaign-1?a=account&segment=low`
+`https://thunderbite-backend-test.test/test-campaign-1?a=account&segment=low`
 
 Here, you will find a board of 25 squares (5x5 grid):
 
