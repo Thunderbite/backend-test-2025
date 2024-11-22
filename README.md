@@ -1,117 +1,143 @@
 # Thunderbite Backend Test
 
-This test is designed to test your laravel and algorithm knowledge, and it is a good representation of your core skills that are required to become a Thunderbite team member.
+This test is designed to evaluate your Laravel and algorithm knowledge, providing a good representation of the core skills required to join the Thunderbite team.
 
 ## Installation
 
-For these instructions we assume you make use of Laravel Valet.
-If you are not making use of Laravel Valet the below could differ a bit.
+The following instructions assume you are using Laravel Valet. If not, some steps may differ:
 
-1. Clone this repository
-2. Run composer install
-3. Create and fill the .env file (example included /.env-example)
-4. Run `php artisan key:generate`
-5. Run `php artisan migrate` to create database tables
-6. Seed the database by running `php artisan db:seed`
-7. Run `npm install`
-8. Run `npm run dev`
-9. Visit http://thunderbite-backend-test.test//backstage and happy coding
+1. Clone this repository.
+2. Run `composer install`.
+3. Create and fill the `.env` file (an example is included as `/.env-example`).
+4. Run `php artisan key:generate`.
+5. Run `php artisan migrate` to create database tables.
+6. Seed the database by running `php artisan db:seed`.
+7. Run `npm install`.
+8. Run `npm run dev`.
+9. Visit `http://thunderbite-backend-test.test/backstage` and start coding!
 
-Login details: test@thunderbite.com / test123
+Login credentials for the back office:
+- Email: `test@thunderbite.com`
+- Password: `test123`
 
+---
 
-## Test tasks
+## Test Tasks
 
-The database seeders will create two test campaigns, 10k game records and 18 prize records.
-You can enter the first test campaign here:
+The database seeder creates:
+- Two test campaigns.
+- 10,000 game records.
+- 18 prize records.
 
-http://thunderbite-backend-test.test/test-campaign-1?a=account&segment=low
+Access the first test campaign here:
 
-Here you will find a board of 25 squares 5x5.
+`http://thunderbite-backend-test.test/test-campaign-1?a=account&segment=low`
 
-|  |  |  |  |  |
+Here, you will find a board of 25 squares (5x5 grid):
+
+|     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
-|  |  |  |  |  |   
-|  |  |  |  |  |
-|  |  |  |  |  |
+|     |     |     |     |     |
+|     |     |     |     |     |
+|     |     |     |     |     |
+|     |     |     |     |     |
 
-##### Task 1
+---
 
-###### Create a game.
-When an account enters the campaign link (?a=account), a game record should be created or retrieved if there is an unfinished game for that account.
-The objective of the Game is to click on the board, each click will open a random tile (prizes section in back office), when you collect 3 tiles that are the same (prizes) the game is finished and you win that prize.
+### Task 1: Create a Game
 
-Please also take into consideration the start and end dates of campaigns. Display a message if a campaign has not yet started or has ended (the game can't be played).
+When an account accesses the campaign link (`?a=account`), create a new game record or retrieve an unfinished game for the account.
 
-A frontend controller has already been created with a route, you can find it here:
-`FrontendController@loadCampaign`
+**Game Rules:**
+- Clicking on the board reveals a random tile (prize) from the back office. The tile is selected based on the prize weighting configured in the back office.
+- When a player collects three matching tiles (prizes), the game ends, and they win that prize.
+- Display a message if the campaign has not started or has ended.
 
-There is a simple frontend provided for this game, you will have to pass the `$config` variable to the frontend and it has to be a `json` string containing these parameters:
+**Frontend Integration:**
+- The game frontend expects a `$config` variable as a JSON string:
+    ```php
+    [
+         'apiPath' => '/api/flip',     // API endpoint for tile click
+         'gameId' => 'gameID',         // Passed as a POST parameter
+         'revealedTiles' => [[
+            'index' => 0,
+            'image' => '/assets/tile.jpg'
+        ]],                            // Restore clicked tiles for an ongoing game
+        'message' => 'Campaign has ended' // Popup message when the game is unavailable
+    ]
+    ```
 
-```php
-[
-     'apiPath' => '/api/openTile', // The frontend will make a request to this endpoint when a player clicks a square on the board
-     'gameId' => 'gameID' // This will be passed to `apiPath` endpoint as POST parameter
-     'reveledTiles' => [[
-        'index' => 0
-        'image' => '/assets/tile.jpg'
-    ]], // This will have to be used to restore an in progress game with tiles already clicked
-    'message' => 'Campaign has ended' // Message popup layout on load, game can't be played with it 
-]
-```
+**API Interaction:**
+- The frontend will send a `POST` request to `apiPath` with:
+    ```json
+    {
+        "gameId": 0,
+        "tileIndex": 0
+    }
+    ```
+- The API should respond with:
+    ```json
+    {
+        "tileImage": "/assets/tile.jpg"
+    }
+    ```
+- The `tileImage` must correspond to an image uploaded via the back office for the associated prize. Ensure that the uploaded images are stored in an accessible location and that the correct path is returned based on the prize configuration and game logic.
 
-The frontend will make this request with example body `POST apiPath`
-```json
-{
-    "gameId": 0,
-    "tileIndex": 0
-}
-```
+- When the last tile (3rd match) is clicked, include the prize description in the response:
+    ```json
+    {
+        "tileImage": "/assets/tile.jpg",
+        "message": "You won a prize!"
+    }
+    ```
 
-The frontend will be expecting this response from the endpoint and will display the image provided on clicked square:
-```json
-{
-    "tileImage": "/assets/tile.jpg"
-}
-```
+**Additional Requirements:**
+1. Allow prize tile images to be uploaded via the back office.
+    - Use uploaded images for the game tiles.
+2. Use prize `weighting` for tile selection:
+    ```php
+    ->orderByRaw('-LOG(1.0 - RAND()) / weight')
+    ```
+    - **Bonus:** Create an illusion of equal chance for prizes until the final match.
+3. Enforce prize `daily volume` limits based on a new back office input. This means that if a prize has been won the number of times defined by its daily limit in the back office, it cannot be won again on the same day. The game logic should prevent further attempts to award this prize until the daily limit is reset or adjusted in the back office. Ensure this restriction is reflected both in the tile selection logic and the overall game functionality.
+4. Ensure that the game state can be resumed if the player refreshes the page or returns later.
+5. Limit prize availability based on the player's `segment`, which is passed as a `GET` parameter. The database is seeded with example segments: `low`, `med`, and `high`. Players can only draw prizes assigned to the segment specified in the query parameter. For instance, if a player accesses the game with the segment set to `low` (`?segment=low`), they can only draw prizes designated for the `low` segment. Ensure this segmentation logic is consistently applied during prize selection and tile drawing.
 
-When the last tile is being opened (3rd match) please include prize description in the response, that will be shown in popup of the game:
-```json
-{
-    "tileImage": "/assets/tile.jpg",
-    "message": "You won a prize!"
-}
-```
+---
 
-* Please allow to upload prize tile images in the back office, and use that image in the game. Each prize should have a tile uploaded for it to work.
-    * you can find example tile assets in `/resources/assets/`
-* When drawing a tile please take into consideration the prize `weighting` which is configurable in the back office
-    * You should use this to apply the weights:
-  ```php
-   ->orderByRaw('-LOG(1.0 - RAND()) / weight')
-  ```
-    * Bonus points if you could create an illusion that each prize has equal chance of being drawn until very end
-    * Please note that prizes are segmented, default account segment should be `low`, account's segment should be passed when loading the game (campaign) through a GET parameter `segment`. Segments work like this, if account A loads the game with segment set to low, only prizes assigned to segment low could be drawn for this account.
-    * Add extra input into the backoffice `prizes` section crud, call it `daily volume`. Make sure this works in game logic, it shouldn't allow to draw more than `daily volume` of the same prize in one day.
-    * Make sure that the board can be resumed, if same account refreshes the page, or comes back to the game later.
-    * `users` table is for back office access only, we don't need to create accounts in it, games table `account` field is enough.
+### Task 2: Export Button in Back Office
 
-##### Task 2
-Add an Export button to the Games section of the back office, which will generate a CSV of all <u>filtered</u> games.
+Add an **Export** button to the back office **Games** section. This button should generate a CSV of all **filtered** games.
 
-All accounts games can be accessed from backstage/games section.
-This page should contain table filters, for easy data querying.
-Filters that should be added can be seen in Games::filter() method (this particular query can be improved).
+**Requirements:**
+- Add table filters for easy data querying. Filters should align with those defined in the `Games::filter()` method.
+- Improve database queries and loading times for this section as needed.
 
-The database might have mistakes or bad practices, and needs optimization and/or extra fields in certain tables. Feel free to change anything you like.
+---
 
-Loading of the games section can be greatly improved with appropriate optimizations.
+### Bonus Task: Testing
 
-##### Bonus Task
+Cover the game logic with automated tests.
+- **Preferred Framework:** `pest`.
+- You may use `phpunit` if you prefer.
 
-Cover game logic with some tests. We prefer `pest` framework, but you can use standard `phpunit` if you prefer.
+---
 
-**All changes to the database should be done with new migrations.**
+### Notes and Guidelines
 
-If you have any questions about the task, do not hesitate to ask.
+1. **Database Updates:** Use new migrations for all changes.
+2. **Optimization:** You are encouraged to optimize database structure, queries, and any other aspects of the project.
+3. **Questions:** If you have any questions, please contact us via email.
+
+---
+
+## Evaluation Criteria
+
+We will evaluate your submission based on:
+1. Code clarity and maintainability.
+2. Adherence to best practices in Laravel development.
+3. Creativity in problem-solving and optimization.
+4. Functionality and accuracy of implemented features.
+5. Quality and coverage of automated tests.
+
+Good luck, and we look forward to seeing your submission!

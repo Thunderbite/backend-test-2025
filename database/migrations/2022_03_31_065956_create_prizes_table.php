@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('campaign_id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('level'); //low, med, high
+            $table->string('segment'); //low, med, high
             $table->decimal('weight', 10, 2)->nullable(); // 0.01 - 99.99, determines the chance of winning
             $table->timestamp('starts_at')->nullable(); //prize can be won from this date onwards
             $table->timestamp('ends_at')->nullable(); //until this date

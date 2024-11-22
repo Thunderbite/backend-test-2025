@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 class Prize extends Model
 {
@@ -12,7 +12,7 @@ class Prize extends Model
         'campaign_id',
         'name',
         'description',
-        'level',
+        'segment',
         'weight',
         'starts_at',
         'ends_at',
@@ -35,10 +35,5 @@ class Prize extends Model
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
-    }
-
-    public function prizes(): HasMany
-    {
-        return $this->hasMany(PrizeTable::class, 'prize_id');
     }
 }
