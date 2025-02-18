@@ -27,12 +27,20 @@
 ])
 
 @include('backstage.partials.forms.starts-ends', [
-    'starts_at' => old('starts_at') ?? ($prize->starts_at === null ? $prize->starts_at : $prize->starts_at->format('d-m-Y H:i:s')),
-    'ends_at' => old('ends_at') ?? ($prize->ends_at === null ? $prize->ends_at : $prize->ends_at->format('d-m-Y H:i:s')),
+    'starts_at' =>
+        old('starts_at') ??
+        ($prize->starts_at === null ? $prize->starts_at : $prize->starts_at->format('d-m-Y H:i:s')),
+    'ends_at' =>
+        old('ends_at') ?? ($prize->ends_at === null ? $prize->ends_at : $prize->ends_at->format('d-m-Y H:i:s')),
     'minDate' => $activeCampaign->starts_at,
     'maxDate' => $activeCampaign->ends_at,
 ])
 
+@include('backstage.partials.forms.images', [
+    'field' => 'image_src',
+    'label' => 'Image',
+    'value' => old('image_src', $prize->image_src),
+])
+
 
 @includeWhen(empty($disabled), 'backstage.partials.forms.submit')
-
