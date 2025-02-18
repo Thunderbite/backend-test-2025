@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backstage\Prizes;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class UpdateRequest extends FormRequest
 {
@@ -26,6 +27,15 @@ class UpdateRequest extends FormRequest
             'starts_at' => 'required|date_format:d-m-Y H:i:s',
             'ends_at' => 'required|date_format:d-m-Y H:i:s',
             'segment' => 'required|in:low,med,high',
+            'image_src' => [File::image()->max('500kb')]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'image_src.image' => 'The uploaded file must be an image.',
+            'image_src.max' => 'Please provide a valid image file < 500kb',
         ];
     }
 }

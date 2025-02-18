@@ -7,6 +7,7 @@ use App\Http\Requests\Backstage\Prizes\StoreRequest;
 use App\Http\Requests\Backstage\Prizes\UpdateRequest;
 use App\Models\Prize;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 
 class PrizeController extends Controller
@@ -35,10 +36,11 @@ class PrizeController extends Controller
     public function store(StoreRequest $request): RedirectResponse
     {
         // Create the prize with validated data
-        $data = $request->validated();
+        $data = Arr::except($request->validated(), 'image_src');
         $data['campaign_id'] = session('activeCampaign');
 
-        Prize::create($data);
+        $prize = Prize::create($data);
+        $this->updateImageSrc($request, $prize);
 
         session()->flash('success', 'The prize has been created!');
 
@@ -61,14 +63,24 @@ class PrizeController extends Controller
     public function update(UpdateRequest $request, Prize $prize): RedirectResponse
     {
         // Update the prize with validated data
-        $data = $request->validated();
+        $data = Arr::except($request->validated(), 'image_src');
         $data['campaign_id'] = session('activeCampaign');
 
         $prize->update($data);
+        $this->updateImageSrc($request, $prize);
 
         session()->flash('success', 'The prize has been updated!');
 
         return redirect()->route('backstage.prizes.edit', $prize->id);
+    }
+
+    private function updateImageSrc(StoreRequest|UpdateRequest $request, Prize $prize)
+    {
+        if ($request->hasFile('image_src')) {
+            $file = $request->file('image_src');
+            $path = $file->storeAs('prizes', sprintf('%d.%s', $prize->id, $file->getClientOriginalExtension()), 'public');
+            $prize->update(['image_src' => $path]);
+        }
     }
 
     /**
