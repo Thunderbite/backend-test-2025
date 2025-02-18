@@ -44,4 +44,22 @@ class Game extends Model
     {
         return $this->hasMany(GameMove::class);
     }
+
+    public function winningPrizeId(): ?int
+    {
+        return $this->moves()
+            ->selectRaw('prize_id')
+            ->groupBy('prize_id')
+            ->havingRaw('COUNT(id) > ?', [config('game.minimum-matching-tiles-to-win')])
+            ->value('prize_id');
+    }
+
+    public function hasExceededAllowedMovesBeforeLoss(): bool
+    {
+        if (! array_key_exists('moves_count', $this->attributes)) {
+            $this->loadCount('moves');
+        }
+
+        return (int) $this->moves_count >= (int) config('game.maximum-game-moves-before-loss');
+    }
 }
