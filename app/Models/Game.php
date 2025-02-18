@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\GameStatus;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,14 +23,19 @@ class Game extends Model
         ];
     }
 
-    public static function filter(?string $account = null, ?int $prizeId = null, ?string $fromDate = null, ?string $tillDate = null)
+    public static function filter(?string $account = null, ?int $prizeId = null, ?string $startDate = null, ?string $endDate = null)
     {
-        $query = self::query();
-        $campaign = Campaign::find(session('activeCampaign'));
-
-        // When filtering by dates, keep in mind `revealed_at` should be stored in Campaign timezone
-
-        return $query;
+        return self::query()
+            ->when($account, fn (Builder $query) => $query->where('games.account', 'LIKE', "%{$account}%"))
+            ->when($prizeId, fn (Builder $query) => $query->whereWonPrizeId($prizeId))
+            ->when($startDate, function(Builder $query) use ($startDate) {
+                $formattedDate = Carbon::createFromFormat('d-m-Y H:i:s', $startDate)->format('Y-m-d H:i:s');
+                $query->where('revealed_at', '>=', $formattedDate);
+            })
+            ->when($endDate, function(Builder $query) use ($endDate) {
+                $formattedDate = Carbon::createFromFormat('d-m-Y H:i:s', $endDate)->format('Y-m-d H:i:s');
+                $query->where('revealed_at', '<=', $formattedDate);
+            });
     }
 
     public function campaign(): BelongsTo

@@ -75,7 +75,7 @@ class FlipTileAction
 
 	private function markGameAsRevealed(): self
 	{
-		$this->game->update(['revealed_at' => now()]);
+		$this->game->update(['revealed_at' => $this->game->campaign->now_in_time_zone]);
 
 		return $this;
 	}
@@ -92,7 +92,7 @@ class FlipTileAction
 	{
 		$this->game->update([
 			'won_prize_id' => $winningPrizeId,
-			'won_at' => now(),
+			'won_at' => $this->game->campaign->now_in_time_zone,
 			'status' => GameStatus::WON
 		]);
 

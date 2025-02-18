@@ -29,8 +29,8 @@ class GameTable extends TableComponent
             ],
 
             [
-                'title' => 'prize_id', // please update this, that it would show prize name instead
-                'attribute' => 'prize_id',
+                'title' => 'prize name',
+                'attribute' => 'prize_name',
                 'sort' => true,
             ],
 
@@ -44,9 +44,10 @@ class GameTable extends TableComponent
         return view('livewire.backstage.table', [
             'columns' => $columns,
             'resource' => 'games',
-            'rows' => Game::filter()
-                ->join('prizes', 'prizes.id', '=', 'games.prize_id')
+            'rows' => Game::filter($this->account, $this->prizeId ?: null, $this->startDate, $this->endDate)
+                ->join('prizes', 'prizes.id', '=', 'games.won_prize_id')
                 ->where('prizes.campaign_id', session('activeCampaign'))
+                ->select('games.*', 'prizes.name as prize_name')
                 ->orderBy($this->sortField, $this->sortDesc ? 'DESC' : 'ASC')
                 ->paginate($this->perPage),
         ]);
