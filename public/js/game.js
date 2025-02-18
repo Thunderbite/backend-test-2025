@@ -523,6 +523,11 @@ class TileComponent extends Component {
         this.refs.image.src = src;
         this.root.classList.toggle(classes.tileVisible, true);
     }
+
+    // Custom Implementation by Segun Olaiya
+    hasImage() {
+        return !!this.refs.image?.src?.trim();
+    }
 }
 class PopupComponent extends Component {
     render() {
@@ -554,7 +559,8 @@ class MainComponent extends Component {
     }
     handleTileClick(index) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this._interactive) {
+           // Custom Implementation by Segun Olaiya
+            if (!this._interactive || this._tiles[index].hasImage()) {
                 return;
             }
             this._interactive = false;

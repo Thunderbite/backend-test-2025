@@ -31,7 +31,7 @@ class LoadCampaignAction
         return json_encode([
             'apiPath' => '/api/flip',
             'gameId' => $game->id,
-            'revealedTiles' => $tiles,
+            'reveledTiles' => $tiles,
             'message' => $message
 		]);
 	}
