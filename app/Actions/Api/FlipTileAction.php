@@ -17,18 +17,26 @@ class FlipTileAction
 
 	public function handle(int $gameId, int $index): array
 	{
-		return $this
+		$this
 			->setGame($gameId)
 			->setNextPrize()
 			->when($this->game->moves_count === 0, fn () => $this->markGameAsRevealed())
-			->createMove($index)
-			->when($this->game->hasExceededAllowedMovesBeforeLoss(), fn () => $this->markAsLost())
-			->done();
+			->createMove($index);
+
+			if ($winningPrizeId = $this->game->winningPrizeId()) {
+				return $this->markAsWon($winningPrizeId)->done();
+			}
+
+			if ($this->game->hasExceededAllowedMovesBeforeLoss()) {
+				$this->markAsLost();
+			}
+
+			return $this->done();
 	}
 
 	private function setGame(int $gameId): self
 	{
-		$this->game = Game::findOrFail($gameId)->withCount('moves')->first();
+		$this->game = Game::withCount('moves')->whereId($gameId)->firstOrFail();
 
 		return $this;
 	}
@@ -56,6 +64,16 @@ class FlipTileAction
 	private function createMove(int $index): self
 	{
 		$this->game->moves()->create(['prize_id' => $this->nextPrize->id, 'index' => $index]);
+		$this->game->loadCount('moves');
+
+		return $this;
+	}
+
+	private function markAsWon(int $winningPrizeId): self
+	{
+		$this->game->update(['won_prize_id' => $winningPrizeId, 'status' => GameStatus::WON]);
+
+		$this->message = 'You won a prize!';
 
 		return $this;
 	}
