@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTimeZone;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -11,21 +12,17 @@ class Campaign extends Model
 {
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'timezone', 'name', 'slug', 'starts_at', 'ends_at',
-    ];
-
     protected function casts(): array
     {
         return [
             'starts_at' => 'datetime',
             'ends_at' => 'datetime',
         ];
+    }
+
+    public function prizes(): HasMany
+    {
+        return $this->hasMany(Prize::class);
     }
 
     /**
