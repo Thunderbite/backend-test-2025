@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,5 +25,12 @@ class Prize extends Model
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
+    }
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => asset($this->image_src)
+        );
     }
 }

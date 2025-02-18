@@ -23,10 +23,15 @@ class LoadCampaignAction
             default => null
         };
 
+        $tiles = $game->moves()->with('prize')->get()->map(fn ($move) => [
+            'index' => $move->index,
+            'image' => $move->prize->image_url
+        ]);
+
         return json_encode([
             'apiPath' => '/api/flip',
             'gameId' => $game->id,
-            'revealedTiles' => [],
+            'revealedTiles' => $tiles,
             'message' => $message
 		]);
 	}

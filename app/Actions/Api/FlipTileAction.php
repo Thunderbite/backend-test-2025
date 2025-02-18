@@ -89,7 +89,7 @@ class FlipTileAction
 
 	private function done(): array
 	{
-		$response = ['tileImage' => asset($this->nextPrize->image_src)];
+		$response = ['tileImage' => asset($this->nextPrize->image_url)];
         if (filled($this->message)) {
             $response['message'] = $this->message;
         }
