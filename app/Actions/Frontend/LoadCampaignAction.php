@@ -18,8 +18,8 @@ class LoadCampaignAction
         ]);
 
         $message = match(true) {
-            $campaign->hasNotStarted() => 'This Campaign has not started yet! Please check back later 😀',
-            $campaign->hasEnded() => 'This Campaign has ended. Please select another Campaign to play 🥲',
+            $campaign->hasNotStarted() => 'Campaign has not started yet',
+            $campaign->hasEnded() => 'Campaign has ended',
             default => null
         };
 
