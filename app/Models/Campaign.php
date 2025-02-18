@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTimeZone;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
@@ -56,5 +57,22 @@ class Campaign extends Model
 
         // Return
         return $return;
+    }
+
+    protected function nowInTimeZone(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => now()->setTimezone($this->timezone),
+        );
+    }
+
+    public function hasNotStarted()
+    {
+        return $this->starts_at->greaterThan($this->now_in_time_zone) ?? false;
+    }
+
+    public function hasEnded()
+    {
+        return $this->ends_at->lessThan($this->now_in_time_zone) ?? false;
     }
 }
