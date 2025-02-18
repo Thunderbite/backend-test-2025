@@ -54,7 +54,7 @@ final class FrontendControllerTest extends TestCase
 
         $this
             ->getWithQuery($campaign->slug, $params)
-            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([$missingKey]);
     }
 
