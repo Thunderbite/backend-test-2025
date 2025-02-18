@@ -62,13 +62,13 @@ final class FlipTileAction
                 $query
                     ->whereNull('prizes.daily_volume')
                     ->orWhereRaw('
-						prizes.daily_volume > (
-							SELECT
-								COUNT(*)
-							FROM games
-							WHERE games.won_prize_id = prizes.id
-							AND DATE(games.won_at) = CURDATE()
-						)'
+                        prizes.daily_volume > (
+                            SELECT
+                                COUNT(*)
+                            FROM games
+                            WHERE games.won_prize_id = prizes.id
+                            AND DATE(games.won_at) = CURDATE()
+                        )'
                     );
             })
             ->orderByRaw('-LOG(1.0 - RAND()) / prizes.weight')
