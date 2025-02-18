@@ -17,11 +17,17 @@ class LoadCampaignAction
             'status' => GameStatus::ACTIVE
         ]);
 
+        $message = match(true) {
+            $campaign->hasNotStarted() => 'This Campaign has not started yet! Please check back later 😀',
+            $campaign->hasEnded() => 'This Campaign has ended. Please select another Campaign to play 🥲',
+            default => null
+        };
+
         return json_encode([
             'apiPath' => '/api/flip',
             'gameId' => $game->id,
             'revealedTiles' => [],
-            'message' => null
+            'message' => $message
 		]);
 	}
 }
