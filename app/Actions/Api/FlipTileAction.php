@@ -63,7 +63,7 @@ class FlipTileAction
 								COUNT(*)
 							FROM games
 							WHERE games.won_prize_id = prizes.id
-							AND DATE(games.created_at) = CURDATE()
+							AND DATE(games.won_at) = CURDATE()
 						)'
 					);
 			})
@@ -90,7 +90,11 @@ class FlipTileAction
 
 	private function markAsWon(int $winningPrizeId): self
 	{
-		$this->game->update(['won_prize_id' => $winningPrizeId, 'status' => GameStatus::WON]);
+		$this->game->update([
+			'won_prize_id' => $winningPrizeId,
+			'won_at' => now(),
+			'status' => GameStatus::WON
+		]);
 
 		$this->message = $this->nextPrize->description ?? 'You won a prize!';
 

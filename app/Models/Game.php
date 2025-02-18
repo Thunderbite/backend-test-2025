@@ -16,6 +16,7 @@ class Game extends Model
     {
         return [
             'revealed_at' => 'datetime',
+            'won_at' => 'datetime',
             'status' => GameStatus::class
         ];
     }
@@ -50,7 +51,7 @@ class Game extends Model
         return $this->moves()
             ->selectRaw('prize_id')
             ->groupBy('prize_id')
-            ->havingRaw('COUNT(id) > ?', [config('game.minimum-matching-tiles-to-win')])
+            ->havingRaw('COUNT(id) >= ?', [config('game.minimum-matching-tiles-to-win')])
             ->value('prize_id');
     }
 
