@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\GameStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Game extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['campaign_id', 'prize_id', 'account', 'revealed_at'];
-
     protected function casts(): array
     {
         return [
             'revealed_at' => 'datetime',
+            'status' => GameStatus::class
         ];
     }
 
@@ -34,8 +35,13 @@ class Game extends Model
         return $this->belongsTo(Campaign::class);
     }
 
-    public function prize(): BelongsTo
+    public function wonPrize(): BelongsTo
     {
         return $this->belongsTo(Prize::class);
+    }
+
+    public function moves(): HasMany
+    {
+        return $this->hasMany(GameMove::class);
     }
 }

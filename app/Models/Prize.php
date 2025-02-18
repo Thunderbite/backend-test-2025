@@ -3,21 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Prize extends Model
 {
-    protected $fillable = [
-        'campaign_id',
-        'name',
-        'description',
-        'segment',
-        'weight',
-        'starts_at',
-        'ends_at',
-    ];
-
     protected function casts(): array
     {
         return [
