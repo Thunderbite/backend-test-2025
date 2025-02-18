@@ -1,3 +1,22 @@
+AzHAzizov/thunderbite-test-2025
+When i click on an already selected tile
+
+    protected function startsAtInTimeZone(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->starts_at?->setTimezone($this->timezone),
+        );
+    }
+
+    protected function endsAtInTimeZone(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->ends_at?->setTimezone($this->timezone),
+        );
+    }
+
+- Incase you don't know its called reveledTiles
+- Added a custom implementation to fix this (https://github.com/massivebrains/backend-test-2025/pull/6)
 # Thunderbite Backend Test
 
 This test is designed to evaluate your Laravel and algorithm knowledge, providing a good representation of the core skills required to join the Thunderbite team.

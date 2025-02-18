@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Backstage;
 
 use App\Http\Controllers\Controller;
@@ -9,7 +11,7 @@ use App\Models\Campaign;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class CampaignsController extends Controller
+final class CampaignsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -76,7 +78,6 @@ class CampaignsController extends Controller
 
         return redirect()->route('backstage.campaigns.index');
     }
-
 
     /**
      * Activate campaign

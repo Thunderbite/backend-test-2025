@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Backstage;
 
 use App\Models\Game;
 
-class GameTable extends TableComponent
+final class GameTable extends TableComponent
 {
     public $sortField = 'revealed_at';
 
@@ -39,15 +41,15 @@ class GameTable extends TableComponent
         ];
 
         $data = $this->getQuery()->get()->map(function ($row) {
-                return [
-                    $row->account,
-                    $row->prize_name,
-                    $row->revealed_at,
-                    $row->won_at,
-                    $row->segment,
-                    $row->status->value,
-                ];
-            })
+            return [
+                $row->account,
+                $row->prize_name,
+                $row->revealed_at,
+                $row->won_at,
+                $row->segment,
+                $row->status->value,
+            ];
+        })
             ->all();
 
         array_unshift($data, ['Account', 'Prize Name', 'Revealed At', 'Won At', 'Segment', 'Status']);

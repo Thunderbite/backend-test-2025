@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Api;
 
 use App\Enums\GameStatus;
@@ -8,56 +10,58 @@ use App\Models\Prize;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Traits\Conditionable;
 
-class FlipTileAction
+final class FlipTileAction
 {
-	use Conditionable;
+    use Conditionable;
 
-	private Game $game;
-	private ?Prize $nextPrize;
-	private ?string $message = null;
+    private Game $game;
 
-	public function handle(int $gameId, int $index): array
-	{
-		$this->setGame($gameId)->setNextPrize();
-		if (blank($this->nextPrize)) {
-			return $this->setOutOfPrizes()->done();
-		}
+    private ?Prize $nextPrize;
 
-		$this
-			->when($this->game->moves_count === 0, fn () => $this->markGameAsRevealed())
-			->createMove($index);
+    private ?string $message = null;
 
-			if ($winningPrizeId = $this->game->winningPrizeId()) {
-				return $this->markAsWon($winningPrizeId)->done();
-			}
+    public function handle(int $gameId, int $index): array
+    {
+        $this->setGame($gameId)->setNextPrize();
+        if (blank($this->nextPrize)) {
+            return $this->setOutOfPrizes()->done();
+        }
 
-			if ($this->game->hasExceededAllowedMovesBeforeLoss()) {
-				$this->markAsLost();
-			}
+        $this
+            ->when($this->game->moves_count === 0, fn () => $this->markGameAsRevealed())
+            ->createMove($index);
 
-			return $this->done();
-	}
+        if ($winningPrizeId = $this->game->winningPrizeId()) {
+            return $this->markAsWon($winningPrizeId)->done();
+        }
 
-	private function setGame(int $gameId): self
-	{
-		$this->game = Game::withCount('moves')->whereId($gameId)->firstOrFail();
+        if ($this->game->hasExceededAllowedMovesBeforeLoss()) {
+            $this->markAsLost();
+        }
 
-		return $this;
-	}
+        return $this->done();
+    }
 
-	private function setNextPrize(): self
-	{
-		$this->nextPrize = $this
-			->game
-		 	->campaign
-			->prizes()
-			->whereSegment($this->game->segment)
-			->where('starts_at', '<=', now())
-			->where('ends_at', '>=', now())
-			->where(function (Builder $query) {
-				$query
-					->whereNull('prizes.daily_volume')
-					->orWhereRaw('
+    private function setGame(int $gameId): self
+    {
+        $this->game = Game::withCount('moves')->whereId($gameId)->firstOrFail();
+
+        return $this;
+    }
+
+    private function setNextPrize(): self
+    {
+        $this->nextPrize = $this
+            ->game
+            ->campaign
+            ->prizes()
+            ->whereSegment($this->game->segment)
+            ->where('starts_at', '<=', now())
+            ->where('ends_at', '>=', now())
+            ->where(function (Builder $query) {
+                $query
+                    ->whereNull('prizes.daily_volume')
+                    ->orWhereRaw('
 						prizes.daily_volume > (
 							SELECT
 								COUNT(*)
@@ -65,69 +69,69 @@ class FlipTileAction
 							WHERE games.won_prize_id = prizes.id
 							AND DATE(games.won_at) = CURDATE()
 						)'
-					);
-			})
-			->orderByRaw('-LOG(1.0 - RAND()) / prizes.weight')
-			->first();
+                    );
+            })
+            ->orderByRaw('-LOG(1.0 - RAND()) / prizes.weight')
+            ->first();
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function markGameAsRevealed(): self
-	{
-		$this->game->update(['revealed_at' => $this->game->campaign->now_in_time_zone]);
+    private function markGameAsRevealed(): self
+    {
+        $this->game->update(['revealed_at' => $this->game->campaign->now_in_time_zone]);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function createMove(int $index): self
-	{
-		$this->game->moves()->create(['prize_id' => $this->nextPrize->id, 'index' => $index]);
-		$this->game->loadCount('moves');
+    private function createMove(int $index): self
+    {
+        $this->game->moves()->create(['prize_id' => $this->nextPrize->id, 'index' => $index]);
+        $this->game->loadCount('moves');
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function markAsWon(int $winningPrizeId): self
-	{
-		$this->game->update([
-			'won_prize_id' => $winningPrizeId,
-			'won_at' => $this->game->campaign->now_in_time_zone,
-			'status' => GameStatus::WON
-		]);
+    private function markAsWon(int $winningPrizeId): self
+    {
+        $this->game->update([
+            'won_prize_id' => $winningPrizeId,
+            'won_at' => $this->game->campaign->now_in_time_zone,
+            'status' => GameStatus::WON,
+        ]);
 
-		$this->message = $this->nextPrize->description ?? 'You won a prize!';
+        $this->message = $this->nextPrize->description ?? 'You won a prize!';
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function markAsLost(): self
-	{
-		$this->game->update(['status' => GameStatus::LOST]);
+    private function markAsLost(): self
+    {
+        $this->game->update(['status' => GameStatus::LOST]);
 
-		$this->message = 'You lost!';
+        $this->message = 'You lost!';
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function setOutOfPrizes(): self
-	{
-		$this->message = 'All Prizes won! 🥹 Check back tomorrow! 🫵🏻';
+    private function setOutOfPrizes(): self
+    {
+        $this->message = 'All Prizes won! 🥹 Check back tomorrow! 🫵🏻';
 
-		return $this;
-	}
+        return $this;
+    }
 
-	private function done(): array
-	{
-		$tileImage = filled($this->nextPrize)
-			? asset($this->nextPrize->image_url)
-			: asset('assets/empty.png');
+    private function done(): array
+    {
+        $tileImage = filled($this->nextPrize)
+            ? asset($this->nextPrize->image_url)
+            : asset('assets/empty.png');
 
-		$response = ['tileImage' => $tileImage];
+        $response = ['tileImage' => $tileImage];
         if (filled($this->message)) {
             $response['message'] = $this->message;
         }
 
-		return $response;
-	}
+        return $response;
+    }
 }

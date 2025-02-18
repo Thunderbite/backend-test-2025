@@ -1,16 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Backstage;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backstage\Campaigns\UpdateRequest;
-use App\Models\Campaign;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class GameController extends Controller
+final class GameController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *

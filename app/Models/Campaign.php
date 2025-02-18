@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use DateTimeZone;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Campaign extends Model
+final class Campaign extends Model
 {
     use HasSlug;
 
@@ -38,8 +40,8 @@ class Campaign extends Model
 
     public static function search($query)
     {
-        return empty($query) ? static::query()
-            : static::where('name', 'like', '%'.$query.'%')
+        return empty($query) ? self::query()
+            : self::where('name', 'like', '%'.$query.'%')
                 ->orWhere('timezone', 'like', '%'.$query.'%')
                 ->orWhere('starts_at', 'like', '%'.$query.'%')
                 ->orWhere('ends_at', 'like', '%'.$query.'%');

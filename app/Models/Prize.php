@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Prize extends Model
+final class Prize extends Model
 {
     protected function casts(): array
     {
@@ -18,8 +20,8 @@ class Prize extends Model
 
     public static function search($query)
     {
-        return empty($query) ? static::query()
-            : static::where('name', 'like', '%'.$query.'%');
+        return empty($query) ? self::query()
+            : self::where('name', 'like', '%'.$query.'%');
     }
 
     public function campaign(): BelongsTo
@@ -30,7 +32,7 @@ class Prize extends Model
     public function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => asset($this->image_src)
+            get: fn () => asset($this->image_src)
         );
     }
 }

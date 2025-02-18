@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Backstage;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TableComponent extends Component
+abstract class TableComponent extends Component
 {
     use WithPagination;
 
@@ -33,6 +35,6 @@ class TableComponent extends Component
     public function resourceDeleted()
     {
         // No need to do anything
-        //we just reload the data
+        // we just reload the data
     }
 }
