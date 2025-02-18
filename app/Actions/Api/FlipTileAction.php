@@ -47,6 +47,8 @@ class FlipTileAction
 		 	->campaign
 			->prizes()
 			->whereSegment($this->game->segment)
+			->where('starts_at', '<=', now())
+			->where('ends_at', '>=', now())
 			->orderByRaw('-LOG(1.0 - RAND()) / prizes.weight')
 			->first();
 
@@ -73,7 +75,7 @@ class FlipTileAction
 	{
 		$this->game->update(['won_prize_id' => $winningPrizeId, 'status' => GameStatus::WON]);
 
-		$this->message = 'You won a prize!';
+		$this->message = $this->nextPrize->description ?? 'You won a prize!';
 
 		return $this;
 	}
