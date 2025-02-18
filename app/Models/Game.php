@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\GameStatus;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Game extends Model
+final class Game extends Model
 {
     use HasFactory;
 
@@ -19,7 +21,7 @@ class Game extends Model
         return [
             'revealed_at' => 'datetime',
             'won_at' => 'datetime',
-            'status' => GameStatus::class
+            'status' => GameStatus::class,
         ];
     }
 
@@ -28,11 +30,11 @@ class Game extends Model
         return self::query()
             ->when($account, fn (Builder $query) => $query->where('games.account', 'LIKE', "%{$account}%"))
             ->when($prizeId, fn (Builder $query) => $query->whereWonPrizeId($prizeId))
-            ->when($startDate, function(Builder $query) use ($startDate) {
+            ->when($startDate, function (Builder $query) use ($startDate) {
                 $formattedDate = Carbon::createFromFormat('d-m-Y H:i:s', $startDate)->format('Y-m-d H:i:s');
                 $query->where('revealed_at', '>=', $formattedDate);
             })
-            ->when($endDate, function(Builder $query) use ($endDate) {
+            ->when($endDate, function (Builder $query) use ($endDate) {
                 $formattedDate = Carbon::createFromFormat('d-m-Y H:i:s', $endDate)->format('Y-m-d H:i:s');
                 $query->where('revealed_at', '<=', $formattedDate);
             });

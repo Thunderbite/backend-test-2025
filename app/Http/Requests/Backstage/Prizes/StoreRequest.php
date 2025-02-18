@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Backstage\Prizes;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class StoreRequest extends FormRequest
+final class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +30,7 @@ class StoreRequest extends FormRequest
             'ends_at' => 'required|date_format:d-m-Y H:i:s',
             'segment' => 'required|in:low,med,high',
             'daily_volume' => 'nullable|integer|min:0',
-            'image_src' => ['required', File::image()->max('500kb')]
+            'image_src' => ['required', File::image()->max('500kb')],
         ];
     }
 

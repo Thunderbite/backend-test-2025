@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Backstage;
 
 use App\Models\User;
 
-class UserTable extends TableComponent
+final class UserTable extends TableComponent
 {
     public $sortField = 'name';
 

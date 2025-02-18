@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Backstage;
 
 use App\Models\Campaign;
 
-class CampaignTable extends TableComponent
+final class CampaignTable extends TableComponent
 {
     public $sortField = 'name';
 

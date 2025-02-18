@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Backstage;
 
 use App\Http\Controllers\Controller;
@@ -7,13 +9,12 @@ use App\Http\Requests\Backstage\Users\StoreRequest;
 use App\Http\Requests\Backstage\Users\UpdateRequest;
 use App\Mail\Backstage\Users\WelcomeMail;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class UserController extends Controller
+final class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -65,7 +66,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      */
     public function edit(User $user): View
     {
@@ -76,7 +76,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      */
     public function update(UpdateRequest $request, User $user): RedirectResponse
     {
@@ -102,7 +101,6 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      */
     public function destroy(User $user): RedirectResponse
     {

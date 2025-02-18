@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Campaign;
 use App\Models\Prize;
 use Illuminate\Database\Seeder;
 
-class PrizeSeeder extends Seeder
+final class PrizeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

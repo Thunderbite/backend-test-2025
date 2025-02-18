@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Actions\Frontend\LoadCampaignAction;
@@ -7,7 +9,7 @@ use App\Http\Requests\Frontend\LoadCampaignRequest;
 use App\Models\Campaign;
 use Illuminate\View\View;
 
-class FrontendController extends Controller
+final class FrontendController extends Controller
 {
     /**
      * @throws \JsonException
@@ -19,7 +21,7 @@ class FrontendController extends Controller
                 $campaign,
                 $request->input('a'),
                 $request->input('segment')
-            )
+            ),
         ]);
     }
 

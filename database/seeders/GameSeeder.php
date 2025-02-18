@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Game;
 use Illuminate\Database\Seeder;
 
-class GameSeeder extends Seeder
+final class GameSeeder extends Seeder
 {
     /**
      * Run the database seeds.

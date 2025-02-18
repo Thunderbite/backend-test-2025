@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Backstage;
 
 use App\Models\Prize;
 
-class PrizeTable extends TableComponent
+final class PrizeTable extends TableComponent
 {
     public $sortField = 'name';
 

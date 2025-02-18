@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Backstage\Prizes;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class UpdateRequest extends FormRequest
+final class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +30,7 @@ class UpdateRequest extends FormRequest
             'ends_at' => 'required|date_format:d-m-Y H:i:s',
             'segment' => 'required|in:low,med,high',
             'daily_volume' => 'nullable|integer|min:0',
-            'image_src' => [File::image()->max('500kb')]
+            'image_src' => [File::image()->max('500kb')],
         ];
     }
 
