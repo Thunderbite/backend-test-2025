@@ -44,4 +44,10 @@ class Game extends Model
     {
         return $this->hasMany(GameMove::class);
     }
+
+    public function hasExceededAllowedMovesBeforeLoss()
+    {
+        $this->loadCount('moves');
+        return (int) $this->moves_count >= (int) config('game.maximum-game-moves-before-loss');
+    }
 }
