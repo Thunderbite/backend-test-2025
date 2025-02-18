@@ -5,6 +5,7 @@ namespace App\Actions\Api;
 use App\Enums\GameStatus;
 use App\Models\Game;
 use App\Models\Prize;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Traits\Conditionable;
 
 class FlipTileAction
@@ -12,14 +13,17 @@ class FlipTileAction
 	use Conditionable;
 
 	private Game $game;
-	private Prize $nextPrize;
+	private ?Prize $nextPrize;
 	private ?string $message = null;
 
 	public function handle(int $gameId, int $index): array
 	{
+		$this->setGame($gameId)->setNextPrize();
+		if (blank($this->nextPrize)) {
+			return $this->setOutOfPrizes()->done();
+		}
+
 		$this
-			->setGame($gameId)
-			->setNextPrize()
 			->when($this->game->moves_count === 0, fn () => $this->markGameAsRevealed())
 			->createMove($index);
 
@@ -43,16 +47,29 @@ class FlipTileAction
 
 	private function setNextPrize(): self
 	{
-		$this->nextPrize = $this->game
+		$this->nextPrize = $this
+			->game
 		 	->campaign
 			->prizes()
 			->whereSegment($this->game->segment)
 			->where('starts_at', '<=', now())
 			->where('ends_at', '>=', now())
+			->where(function (Builder $query) {
+				$query
+					->whereNull('prizes.daily_volume')
+					->orWhereRaw('
+						prizes.daily_volume > (
+							SELECT
+								COUNT(*)
+							FROM games
+							WHERE games.won_prize_id = prizes.id
+							AND DATE(games.created_at) = CURDATE()
+						)'
+					);
+			})
 			->orderByRaw('-LOG(1.0 - RAND()) / prizes.weight')
 			->first();
 
-		// What happens when $nextPrize is empty?
 		return $this;
 	}
 
@@ -89,9 +106,20 @@ class FlipTileAction
 		return $this;
 	}
 
+	private function setOutOfPrizes(): self
+	{
+		$this->message = 'All Prizes won! 🥹 Check back tomorrow! 🫵🏻';
+
+		return $this;
+	}
+
 	private function done(): array
 	{
-		$response = ['tileImage' => asset($this->nextPrize->image_url)];
+		$tileImage = filled($this->nextPrize)
+			? asset($this->nextPrize->image_url)
+			: asset('assets/empty.png');
+
+		$response = ['tileImage' => $tileImage];
         if (filled($this->message)) {
             $response['message'] = $this->message;
         }
