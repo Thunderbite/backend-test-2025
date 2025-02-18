@@ -27,6 +27,7 @@ class StoreRequest extends FormRequest
             'starts_at' => 'required|date_format:d-m-Y H:i:s',
             'ends_at' => 'required|date_format:d-m-Y H:i:s',
             'segment' => 'required|in:low,med,high',
+            'daily_volume' => 'nullable|integer|min:0',
             'image_src' => ['required', File::image()->max('500kb')]
         ];
     }
