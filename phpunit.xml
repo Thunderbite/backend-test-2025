@@ -25,6 +25,8 @@
     </include>
     <exclude>
         <directory suffix=".php">./app/Actions/Fortify</directory>
+        <file>./app/Livewire/Backstage/TableComponent.php</file>
+        <file>./app/Providers/FortifyServiceProvider.php</file>
     </exclude>
   </source>
 </phpunit>

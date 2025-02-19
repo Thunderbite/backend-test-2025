@@ -177,5 +177,9 @@ final class FlipTileActionTest extends TestCase
 
         $this->assertEquals(GameStatus::LOST, $game->fresh()->status);
         $this->assertNull($game->fresh()->won_at);
+
+        // Just for coverage
+        $this->assertModelExists($game->moves()->first()->prize);
+        $this->assertModelExists($game->moves()->first()->game);
     }
 }
