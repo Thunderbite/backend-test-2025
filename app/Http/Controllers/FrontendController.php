@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Frontend\LoadCampaignAction;
+use App\Enums\Segment;
 use App\Http\Requests\Frontend\LoadCampaignRequest;
 use App\Models\Campaign;
 use Illuminate\View\View;
@@ -20,7 +21,7 @@ final class FrontendController extends Controller
             'config' => $action->handle(
                 $campaign,
                 $request->input('a'),
-                $request->input('segment')
+                $request->enum('segment', Segment::class)
             ),
         ]);
     }

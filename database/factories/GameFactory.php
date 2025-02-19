@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\GameStatus;
+use App\Enums\Segment;
 use App\Models\Campaign;
 use App\Models\Prize;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +21,8 @@ final class GameFactory extends Factory
             'won_prize_id' => Prize::where('campaign_id', $campaign->id)->inRandomOrder()->first()?->id,
             'account' => $this->faker->userName(),
             'revealed_at' => now()->subDays(random_int(1, 10)),
+            'segment' => Segment::LOW,
+            'status' => GameStatus::ACTIVE,
         ];
     }
 }

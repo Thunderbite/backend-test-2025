@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\GameStatus;
+use App\Enums\Segment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,7 @@ final class Game extends Model
             'revealed_at' => 'datetime',
             'won_at' => 'datetime',
             'status' => GameStatus::class,
+            'segment' => Segment::class,
         ];
     }
 

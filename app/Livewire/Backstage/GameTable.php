@@ -46,7 +46,7 @@ final class GameTable extends TableComponent
                 $row->prize_name,
                 $row->revealed_at,
                 $row->won_at,
-                $row->segment,
+                $row->segment->value,
                 $row->status->value,
             ];
         })
