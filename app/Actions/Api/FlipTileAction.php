@@ -18,6 +18,8 @@ final class FlipTileAction
 
     private ?Prize $nextPrize;
 
+    public const MESSAGE_OUT_OF_PRIZES = 'All Prizes won! 🥹 Check back tomorrow! 🫵🏻';
+
     private ?string $message = null;
 
     public function handle(int $gameId, int $index): array
@@ -116,7 +118,7 @@ final class FlipTileAction
 
     private function setOutOfPrizes(): self
     {
-        $this->message = 'All Prizes won! 🥹 Check back tomorrow! 🫵🏻';
+        $this->message = self::MESSAGE_OUT_OF_PRIZES;
 
         return $this;
     }
