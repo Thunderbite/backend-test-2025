@@ -10,6 +10,7 @@ use App\Http\Requests\Backstage\Users\UpdateRequest;
 use App\Mail\Backstage\Users\WelcomeMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -84,7 +85,7 @@ final class UserController extends Controller
 
         // Check if we have a new password
         if (isset($data['password'])) {
-            if (auth()->user()->id !== $user->id) {
+            if (Auth::user()->id !== $user->id) {
                 unset($data['password']);
             } else {
                 $data['password'] = bcrypt($data['password']);
