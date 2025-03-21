@@ -9,7 +9,7 @@
         <div class="px-10 pt-4 pb-8">
             <h1>Create a new campaign</h1>
             <form method="POST" action="{{ route('backstage.campaigns.store') }}">
-                @include('backstage.campaigns.form')
+                @include('backstage.campaigns.form', ['withTemplates' => true])
             </form>
         </div>
     </div>

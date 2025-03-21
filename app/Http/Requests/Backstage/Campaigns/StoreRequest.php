@@ -24,6 +24,7 @@ class StoreRequest extends FormRequest
             'timezone' => 'required',
             'starts_at' => 'required',
             'ends_at' => 'required',
+            'template' => 'nullable|json',
         ];
     }
 }

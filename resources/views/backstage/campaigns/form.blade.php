@@ -18,4 +18,12 @@
     'ends_at' => old('ends_at') ?? ($campaign->ends_at === null ? $campaign->ends_at : $campaign->ends_at->format('d-m-Y H:i:s')),
 ])
 
+@if (isset($withTemplates))
+    <template-select
+        url="https://static.thunderbite.com/frontend/frontend-thunderbite-wheel-v4/templates/"
+        name="template"
+        :old="{{old('template')}}"
+    ></template-select>
+@endif
+
 @include('backstage.partials.forms.submit')

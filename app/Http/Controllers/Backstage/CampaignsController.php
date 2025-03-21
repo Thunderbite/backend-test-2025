@@ -34,8 +34,11 @@ class CampaignsController extends Controller
      */
     public function store(StoreRequest $request): RedirectResponse
     {
+        $validated = $request->validated();
+        dd(json_decode($validated['template']));
+
         // Store the campaign directly using validated data
-        Campaign::create($request->validated());
+        Campaign::create($validated);
 
         session()->flash('success', 'The campaign has been created!');
 

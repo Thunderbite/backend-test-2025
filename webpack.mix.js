@@ -12,6 +12,7 @@ const tailwindcss = require('tailwindcss');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .vue({ version: 3 }) // Use Vue 3 version
     .sass('resources/sass/app.scss', 'public/css')
     .options({
         processCssUrls: false,

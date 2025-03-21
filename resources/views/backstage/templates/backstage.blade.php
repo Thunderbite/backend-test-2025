@@ -56,7 +56,7 @@
         <div class="col-span-2">
             @include('backstage.partials.navigation')
         </div>
-        <div class="col-span-10 pt-14">
+        <div id="content" class="col-span-10 pt-14">
             @yield('content')
 
             <!-- Footer -->
