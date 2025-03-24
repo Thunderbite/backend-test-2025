@@ -25,11 +25,6 @@ Route::prefix('backstage')->name('backstage.')->middleware(['auth', 'setActiveCa
     Route::resource('users', UserController::class);
 });
 
-// Route::prefix('backstage')->middleware('setActiveCampaign')->group(function () {
-//     // Account activation
-//     Route::get('activate/{ott}', 'Auth\ActivateAccountController@index')->name('backstage.activate.show');
-//     Route::put('activate/{ott}', 'Auth\ActivateAccountController@update')->name('backstage.activate.update');
-// });
 
 Route::get('{campaign:slug}', [FrontendController::class, 'loadCampaign']);
 Route::get('/', [FrontendController::class, 'placeholder']);
