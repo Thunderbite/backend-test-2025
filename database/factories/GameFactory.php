@@ -26,7 +26,7 @@ class GameFactory extends Factory
             'campaign_id' => $campaign->id,
             'prize_id' => Prize::where('campaign_id', $campaign->id)->inRandomOrder()->first()->id,
             'account' => $this->faker->userName(),
-            'revealed_at' => now()->subDays(random_int(1, 10)),
+            'finished_at' => now()->subDays(random_int(1, 10)),
         ];
     }
 }

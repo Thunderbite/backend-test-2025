@@ -13,13 +13,10 @@ return new class extends Migration {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id');
-            $table->foreignId('prize_id')->nullable(); //id of the won prize
-            $table->string('account'); //username of the user who played the game
-            $table->dateTime('revealed_at')->nullable(); //timestamp in campaign's timezone
-            // when the game has been played - it can be different than created_at
+            $table->foreignId('prize_id')->nullable(); // id of the won prize
+            $table->string('account'); // username of the user who played the game
+            $table->dateTime('finished_at')->nullable(); // timestamp in campaign's timezone (When the game was won or lost)
             $table->timestamps();
-
-            $table->index('id', 'default_index');
         });
     }
 
