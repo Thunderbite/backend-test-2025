@@ -1,10 +1,7 @@
 @extends('backstage.templates.backstage')
 
 @section('tools')
-
-
     <a href="{{ route('backstage.prizes.create') }}" class="button-create">Create prize</a>
-
 @endsection
 
 @section('content')

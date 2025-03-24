@@ -12,12 +12,6 @@
             <option>15</option>
             <option>25</option>
         </select>
-
-        {{-- @if($hasSearch)
-            <input wire:model.live="search" type="text" placeholder="Search..." class="bg-gray-100 border border-gray-300 rounded-full px-4 text-gray-400 ml-4">
-        @endif --}}
-
-
     </div>
 </div>
 
