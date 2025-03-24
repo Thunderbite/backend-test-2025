@@ -29,10 +29,4 @@ class TableComponent extends Component
 
         $this->sortField = $field;
     }
-
-    public function resourceDeleted()
-    {
-        // No need to do anything
-        //we just reload the data
-    }
 }
