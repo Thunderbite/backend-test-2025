@@ -570,8 +570,8 @@ class MainComponent extends Component {
         });
     }
     onAttach() {
-        if (this._config.reveledTiles) {
-            this._config.reveledTiles.forEach(x => this._tiles[x.index].setImage(x.image));
+        if (this._config.revealedTiles) {
+            this._config.revealedTiles.forEach(x => this._tiles[x.index].setImage(x.image));
         }
         if (this._config.message) {
             this.refs.popup.setMessage(this._config.message);
