@@ -10,12 +10,12 @@ class Game extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['campaign_id', 'prize_id', 'account', 'revealed_at'];
+    protected $fillable = ['campaign_id', 'prize_id', 'account', 'finished_at'];
 
     protected function casts(): array
     {
         return [
-            'revealed_at' => 'datetime',
+            'finished_at' => 'datetime',
         ];
     }
 
@@ -24,7 +24,7 @@ class Game extends Model
         $query = self::query();
         $campaign = Campaign::find(session('activeCampaign'));
 
-        // When filtering by dates, keep in mind `revealed_at` should be stored in Campaign timezone
+        // When filtering by dates, keep in mind `finished_at` should be stored in Campaign timezone
 
         return $query;
     }

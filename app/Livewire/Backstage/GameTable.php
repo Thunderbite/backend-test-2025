@@ -6,7 +6,7 @@ use App\Models\Game;
 
 class GameTable extends TableComponent
 {
-    public $sortField = 'revealed_at';
+    public $sortField = 'finished_at';
 
     public $extraFilters = 'games-filters';
 
@@ -35,8 +35,8 @@ class GameTable extends TableComponent
             ],
 
             [
-                'title' => 'revealed at',
-                'attribute' => 'revealed_at',
+                'title' => 'finished at',
+                'attribute' => 'finished_at',
                 'sort' => true,
             ],
         ];
