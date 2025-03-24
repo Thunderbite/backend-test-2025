@@ -4,10 +4,6 @@
     </label>
 
     <div class="col-span-2 imageupload">
-        {{-- <div class="custom-file">
-            <input type="file" name="{{ $field }}" value="{{ $value ?? '' }}" class="custom-file-input @error($field) is-invalid @enderror">
-            <label class="custom-file-label" for="customFile"> {{ $cta ?? 'Click to upload a file'}}  </label>
-        </div> --}}
         <div class="">
             <div class="imageupload__input">
                 <input class="imageupload__file custom-file-input @error($field) is-invalid @enderror" type="file" name="{{ $field }}" value="{{ $value ?? '' }}"  id="{{ $field }}" data-multiple-caption="{count} files selected"  />
@@ -24,7 +20,7 @@
         </div>
 
     </div>
-    <div class="col-span-1"> 
+    <div class="col-span-1">
         @if( isset($artwork) && array_key_exists($field, $artwork) )
             <img src="{{env('DO_CDN_URL'). $artwork[$field] }}" class="img-responsive w-16" />
         @endif
@@ -32,6 +28,6 @@
         @if( isset($value)  )
             <img src="{{env('DO_CDN_URL'). $value }}" class="img-responsive w-16" />
         @endif
-        
+
     </div>
 </div>

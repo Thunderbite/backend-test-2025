@@ -117,8 +117,6 @@
 
 @include('backstage.partials.flash-messages')
 
-@include('backstage.partials.support')
-
 </body>
 
 </html>
