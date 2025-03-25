@@ -16,13 +16,13 @@
         </span>
         @enderror
     </div>
-    <div class="col-span-1"> 
+    <div class="col-span-1">
         @if( isset($artwork) && array_key_exists($field, $artwork) )
-            <img src="{{env('DO_CDN_URL'). $artwork[$field] }}" class="img-responsive w-16" />
+            <img src="{{ $artwork[$field] }}" class="img-responsive w-16" />
         @endif
 
         @if( isset($value)  )
-            <img src="{{env('DO_CDN_URL'). $value }}" class="img-responsive w-16" />
+            <img src="{{ $value }}" class="img-responsive w-16" />
         @endif
     </div>
 </div>
@@ -33,13 +33,13 @@
             for (let i = 0; i < customfiles.length; i++) {
                 customfiles[i].addEventListener('change', changeInputName, false)
             }
-        
+
             function changeInputName(e){
                 var fileName = e.target.files[0].name;
                 var nextSibling = e.target.nextElementSibling
                 nextSibling.innerText = fileName
             }
-        
+
         </script>
     @endpush
 @endonce

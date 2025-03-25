@@ -10,7 +10,7 @@
     <title>Thunderbite</title>
 
     <script>
-        var config = @json($config);
+        var config = {!! $config !!};
     </script>
 
 </head>
